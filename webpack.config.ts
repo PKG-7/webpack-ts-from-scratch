@@ -5,7 +5,7 @@ import type { Configuration as DevServerConfiguration } from "webpack-dev-server
 
 interface EnvVariables {
   mode: "development" | "production";
-  port: 3013;
+  port: number;
 }
 
 export default (env: EnvVariables) => {
@@ -13,7 +13,7 @@ export default (env: EnvVariables) => {
 
   const config: webpack.Configuration = {
     mode: env.mode ?? "development",
-    entry: path.resolve(__dirname, "src", "index.ts"),
+    entry: path.resolve(__dirname, "src", "index.tsx"),
     output: {
       path: path.resolve(__dirname, "build"),
       filename: "[name].[contenthash].js",
