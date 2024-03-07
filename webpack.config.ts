@@ -2,6 +2,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
 import webpack from "webpack";
 import type { Configuration as DevServerConfiguration } from "webpack-dev-server";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 interface EnvVariables {
   mode: "development" | "production";
@@ -22,6 +23,17 @@ export default (env: EnvVariables) => {
     module: {
       rules: [
         {
+          test: /\.s[ac]ss$/i,
+          use: [
+            MiniCssExtractPlugin.loader,
+            // Translates CSS into CommonJS
+            "css-loader",
+            // Compiles Sass to CSS
+            "sass-loader",
+            ,
+          ],
+        },
+        {
           test: /\.tsx?$/,
           use: "ts-loader",
           exclude: /node_modules/,
@@ -31,6 +43,10 @@ export default (env: EnvVariables) => {
     plugins: [
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "public", "index.html"),
+        // filename: `[name].[contenthash].html`,
+      }),
+      new MiniCssExtractPlugin({
+        filename: `[name].[contenthash].css`,
       }),
     ],
     resolve: {
@@ -44,5 +60,7 @@ export default (env: EnvVariables) => {
         }
       : undefined,
   };
-  return config;
+  return config as webpack.Configuration & {
+    devServer: DevServerConfiguration | undefined;
+  };
 };
