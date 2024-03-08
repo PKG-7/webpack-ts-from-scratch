@@ -1,66 +1,29 @@
-import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
 import webpack from "webpack";
-import type { Configuration as DevServerConfiguration } from "webpack-dev-server";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-
-interface EnvVariables {
-  mode: "development" | "production";
-  port: number;
-}
+import { bildWebpack } from "./config/build/buildWebpack";
+import { BuildPaths, EnvVariables } from "./config/build/types/types";
 
 export default (env: EnvVariables) => {
-  const isDev = env.mode === "development";
+  // Имя, которое будет у трех файлов css, js, html в build папке
+  const filename = "component.[contenthash]";
 
-  const config: webpack.Configuration = {
-    mode: env.mode ?? "development",
+  const paths: BuildPaths = {
+    // Путь к папке в которую сохранится наш build
+    output: path.resolve(__dirname, "build"),
+
+    // Путь к файлу, который является точкой входа для приложения
     entry: path.resolve(__dirname, "src", "index.tsx"),
-    output: {
-      path: path.resolve(__dirname, "build"),
-      filename: "[name].[contenthash].js",
-      clean: true,
-    },
-    module: {
-      rules: [
-        {
-          test: /\.s[ac]ss$/i,
-          use: [
-            MiniCssExtractPlugin.loader,
-            // Translates CSS into CommonJS
-            "css-loader",
-            // Compiles Sass to CSS
-            "sass-loader",
-            ,
-          ],
-        },
-        {
-          test: /\.tsx?$/,
-          use: "ts-loader",
-          exclude: /node_modules/,
-        },
-      ],
-    },
-    plugins: [
-      new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "public", "index.html"),
-        // filename: `[name].[contenthash].html`,
-      }),
-      new MiniCssExtractPlugin({
-        filename: `[name].[contenthash].css`,
-      }),
-    ],
-    resolve: {
-      extensions: [".tsx", ".ts", ".js"],
-    },
-    devtool: isDev && "inline-source-map",
-    devServer: isDev
-      ? {
-          port: env.port ?? 3000,
-          open: true,
-        }
-      : undefined,
+
+    // Путь к Html шаблону по которому будет собираться итоговый html файл в build
+    html: path.resolve(__dirname, "public", "index.html"),
   };
-  return config as webpack.Configuration & {
-    devServer: DevServerConfiguration | undefined;
-  };
+
+  const config: webpack.Configuration = bildWebpack({
+    port: env.port ?? 3000,
+    mode: env.mode ?? "development",
+    paths,
+    filename,
+  });
+
+  return config;
 };
