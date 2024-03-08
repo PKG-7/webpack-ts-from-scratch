@@ -9,15 +9,15 @@ export function buildPlugins({
   filename,
 }: BuildOptions): Configuration["plugins"] {
   // Плагины, которые используются всегда по умолчанию
-  const plugins: Configuration["plugins"] = [
-    new HtmlWebpackPlugin({
-      template: paths.html,
-      filename: `${filename}.html`,
-    }),
-  ];
+  const plugins: Configuration["plugins"] = [];
 
   // Плагины только для режима Development
   if (mode === "development") {
+    plugins.push(
+      new HtmlWebpackPlugin({
+        templateContent: htmlTemplate(),
+      })
+    );
   }
 
   // Плагины только для Production build
@@ -25,9 +25,28 @@ export function buildPlugins({
     plugins.push(
       new MiniCssExtractPlugin({
         filename: `${filename}.css`,
+      }),
+
+      new HtmlWebpackPlugin({
+        templateContent: htmlTemplate(),
+        filename: `${filename}.html`,
       })
     );
   }
 
   return plugins;
 }
+
+const htmlTemplate = (title = "Application") => `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title}</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  </html>
+  `;
