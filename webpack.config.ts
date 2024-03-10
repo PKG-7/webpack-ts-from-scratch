@@ -16,6 +16,9 @@ export default (env: EnvVariables) => {
 
     // Путь к Html шаблону по которому будет собираться итоговый html файл в build
     html: path.resolve(__dirname, "public", "index.html"),
+
+    //Путь к основной папке src
+    src: path.resolve(__dirname, "src"),
   };
 
   const config: webpack.Configuration = bildWebpack({

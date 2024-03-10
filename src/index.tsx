@@ -2,8 +2,8 @@ import { createRoot } from "react-dom/client";
 import App from "./components/App";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./styles/index.scss";
-import { Shop } from "./pages/shop";
-import AboutLazy from "./pages/about/About.lazy";
+import { Shop } from "@/pages/shop";
+import AboutLazy from "@/pages/about/About.lazy";
 import { Suspense } from "react";
 
 const root = document.getElementById("root");
