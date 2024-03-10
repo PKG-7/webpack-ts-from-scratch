@@ -2,6 +2,8 @@ import { useState } from "react";
 import st from "./App.module.scss";
 import { Link, Outlet } from "react-router-dom";
 import { SiWebpack } from "react-icons/si";
+import webpackPng from "@/assets/images/webpack.png";
+import CrownSvg from "@/assets/images/crown.svg";
 
 export default function App() {
   const [count, setCount] = useState(0);
@@ -16,6 +18,11 @@ export default function App() {
       <h1 className={st.header}>
         <SiWebpack /> Hello, WebPack!
       </h1>
+
+      <div className={st.imageContainer}>
+        <img height={200} width={200} src={webpackPng} alt="webpack" />
+      </div>
+
       <div className={st.counter}>
         <p>
           You clicked
@@ -25,7 +32,10 @@ export default function App() {
 
       <div className={st.buttonContainer}>
         <button className={st.button} onClick={increment}>
-          Click me
+          <div>
+            <CrownSvg className={st.icon} />
+          </div>
+          <div className={st.text}>Click me</div>
         </button>
       </div>
       <div className={st.outlet}>
