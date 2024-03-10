@@ -54,3 +54,12 @@
 .link {
   color: white;
 }
+
+.outlet {
+  font-family: $fontPrimary;
+  font-size: 4em;
+  position: absolute;
+  bottom: 1em;
+  left: 50%;
+  transform: translateX(-50%);
+}

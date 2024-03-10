@@ -28,7 +28,9 @@ export default function App() {
           Click me
         </button>
       </div>
-      <Outlet />
+      <div className={st.outlet}>
+        <Outlet />
+      </div>
     </main>
   );
 }
