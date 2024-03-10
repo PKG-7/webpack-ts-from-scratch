@@ -5,6 +5,8 @@ export function buildDevServer(options: BuildOptions): DevServerConfiguration {
   return {
     port: options.port ?? 3000,
     open: true,
+
+    // Нужен для правильной работы React-router и переходу по адресам, например site/about
     // Если раздавать статистику через nginx, то надо делать проксирование на index.html
     historyApiFallback: true,
   };
