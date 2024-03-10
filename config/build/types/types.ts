@@ -11,9 +11,11 @@ export interface BuildOptions {
   paths: BuildPaths;
   mode: BuildMode;
   filename: string;
+  analyzer?: boolean;
 }
 
 export interface EnvVariables {
   mode: BuildMode;
   port: number;
+  analyzer?: boolean;
 }

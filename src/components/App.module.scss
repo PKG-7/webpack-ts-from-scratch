@@ -43,3 +43,14 @@
     cursor: pointer;
   }
 }
+
+.nav {
+  display: flex;
+  gap: 20px;
+  font-family: $fontPrimary;
+  user-select: none;
+}
+
+.link {
+  color: white;
+}

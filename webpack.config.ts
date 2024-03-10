@@ -23,6 +23,7 @@ export default (env: EnvVariables) => {
     mode: env.mode ?? "development",
     paths,
     filename,
+    analyzer: env.analyzer,
   });
 
   return config;

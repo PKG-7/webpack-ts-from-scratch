@@ -2,11 +2,14 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { Configuration } from "webpack";
 import { BuildOptions } from "./types/types";
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 export function buildPlugins({
   mode,
   paths,
   filename,
+  analyzer,
 }: BuildOptions): Configuration["plugins"] {
   // Плагины, которые используются всегда по умолчанию
   const plugins: Configuration["plugins"] = [];
@@ -30,7 +33,9 @@ export function buildPlugins({
       new HtmlWebpackPlugin({
         templateContent: htmlTemplate(),
         filename: `${filename}.html`,
-      })
+      }),
+
+      analyzer && new BundleAnalyzerPlugin()
     );
   }
 
