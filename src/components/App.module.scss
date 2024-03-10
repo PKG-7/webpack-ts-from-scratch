@@ -1,9 +1,4 @@
-$bg: black;
-
-body {
-  background-color: $bg;
-  color: white;
-}
+@import "../styles/variables.scss";
 
 .main {
   height: 95vh;
@@ -13,4 +8,38 @@ body {
 
 .header {
   font-size: 4em;
+  font-family: $fontSecondary;
+}
+
+.counter {
+  display: grid;
+  place-content: center;
+  font-family: $fontPrimary;
+  font-size: 2em;
+  font-weight: 800;
+}
+
+.count {
+  color: $primary;
+}
+
+.buttonContainer {
+  display: grid;
+  place-content: center;
+  width: 100%;
+}
+
+.button {
+  border-radius: 0.5em;
+  font-weight: bold;
+  font-size: 1em;
+  width: 15em;
+  height: 3em;
+  font-family: $fontPrimary;
+
+  &:hover {
+    background: $primary;
+    transition: 200ms;
+    cursor: pointer;
+  }
 }

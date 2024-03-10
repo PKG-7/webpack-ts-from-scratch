@@ -1,0 +1,14 @@
+$background: black;
+$foreground: white;
+$primary: #c9772a;
+
+$fontPrimary: "Russo One", sans-serif;
+$fontSecondary: "CutOff", serif;
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@500&family=Russo+One&display=swap");
+@font-face {
+  font-family: "CutOff";
+  src: url("../assets/fonts/CutOutOFFont.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
