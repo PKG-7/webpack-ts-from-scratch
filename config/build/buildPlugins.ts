@@ -5,6 +5,9 @@ import { BuildOptions } from "./types/types";
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import { attachReactRefresh } from "next/dist/build/webpack-config";
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
+import React from "react";
 
 export function buildPlugins({
   mode,
@@ -23,7 +26,10 @@ export function buildPlugins({
       }),
 
       // Выносит проверку типов в отдельный процесс, чтобы не замедлять сборку
-      new ForkTsCheckerWebpackPlugin()
+      new ForkTsCheckerWebpackPlugin(),
+
+      // Плагин для hot reload
+      new ReactRefreshWebpackPlugin()
     );
   }
 
