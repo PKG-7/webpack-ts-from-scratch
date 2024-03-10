@@ -3,8 +3,8 @@ import { ModuleOptions } from "webpack";
 import { BuildOptions } from "./types/types";
 
 export function buildLoaders({ mode }: BuildOptions): ModuleOptions["rules"] {
-  //Тут можно задать формат стилей
-  //https://webpack.js.org/loaders/css-loader/#localidentname
+  // Тут можно задать формат наименования стилей в бэм с хэшем или как угодно
+  // https://webpack.js.org/loaders/css-loader/#localidentname - документация
   const scssLoaderWithModules = {
     loader: "css-loader",
     options: {
@@ -19,6 +19,7 @@ export function buildLoaders({ mode }: BuildOptions): ModuleOptions["rules"] {
     type: "asset/resource",
   };
 
+  // Для импортирования Svg как React компонента и прокидывания туда стилей
   const svgrLoader = {
     test: /\.svg$/i,
     use: [
@@ -56,8 +57,15 @@ export function buildLoaders({ mode }: BuildOptions): ModuleOptions["rules"] {
 
   const typescriptLoader = {
     test: /\.tsx?$/,
-    use: "ts-loader",
     exclude: /node_modules/,
+    use: {
+      loader: "ts-loader",
+      options: {
+        // transpileOnly: true - будет быстрее сборка, но не будет проверки типов при сборке
+        // Плагин ForkTsCheckerWebpackPlugin сделает проверку отдельным процессом
+        transpileOnly: true,
+      },
+    },
   };
 
   return [assetLoader, scssLoader, typescriptLoader, svgrLoader];

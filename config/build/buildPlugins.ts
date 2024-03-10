@@ -4,6 +4,7 @@ import { Configuration } from "webpack";
 import { BuildOptions } from "./types/types";
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 
 export function buildPlugins({
   mode,
@@ -11,19 +12,22 @@ export function buildPlugins({
   filename,
   analyzer,
 }: BuildOptions): Configuration["plugins"] {
-  // Плагины, которые используются всегда по умолчанию
+  // 🌎 Плагины, которые используются всегда по умолчанию
   const plugins: Configuration["plugins"] = [];
 
-  // Плагины только для режима Development
+  // 🕶 Плагины только для режима Development
   if (mode === "development") {
     plugins.push(
       new HtmlWebpackPlugin({
         templateContent: htmlTemplate(),
-      })
+      }),
+
+      // Выносит проверку типов в отдельный процесс, чтобы не замедлять сборку
+      new ForkTsCheckerWebpackPlugin()
     );
   }
 
-  // Плагины только для Production build
+  // 🏙 Плагины только для Production build
   if (mode === "production") {
     plugins.push(
       new MiniCssExtractPlugin({
@@ -42,6 +46,7 @@ export function buildPlugins({
   return plugins;
 }
 
+// 🗺 Шаблон по которому создается наш итоговый Html
 const htmlTemplate = (title = "Application") => `
   <!DOCTYPE html>
   <html lang="en">
