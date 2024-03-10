@@ -5,7 +5,12 @@ body {
   color: white;
 }
 
-.dik {
-  background-color: green;
-  color: white;
+.main {
+  height: 95vh;
+  display: grid;
+  place-content: center;
+}
+
+.header {
+  font-size: 4em;
 }
